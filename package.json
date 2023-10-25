@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "cleanup": "rmdir /q /s .parcel-cache dist",
-    "start": "npm run cleanup && parcel src/index.html",
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
     "test": "jest"
   },
   "author": "code-gene",
