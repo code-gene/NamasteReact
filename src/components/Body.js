@@ -1,6 +1,8 @@
 import RestaurantCard from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import { Link } from "react-router-dom";
+import { SWIGGY_API_URL } from "../utils/constants";
 
 const Body = () => {
   const [restaurantList, setRestaurantList] = useState([]);
@@ -14,13 +16,18 @@ const Body = () => {
   console.log("Body Rendered");
 
   // useEffect is called after the component renders
+  /*
+    - If no dependency array => useEffect is called on every render
+    - If dependency array is empty array = [] => useEffect is called on initial render(just once)
+    - If dependency array != empty => useEffect is called on every time dependency is updated
+  */
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9351929&lng=77.62448069999999&page_type=DESKTOP_WEB_LISTING"
+      SWIGGY_API_URL
     );
 
     const json = await data.json();
@@ -73,7 +80,12 @@ const Body = () => {
       </div>
       <div className="res-container">
         {filteredRestaurantList.map((restaurant) => (
-          <RestaurantCard key={restaurant.info.id} resData={restaurant} />
+          <Link
+            key={restaurant.info.id}
+            to={"/restaurants/" + restaurant.info.id}
+          >
+            <RestaurantCard resData={restaurant} />
+          </Link>
         ))}
       </div>
     </div>
