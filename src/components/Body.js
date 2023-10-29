@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { SWIGGY_API_URL } from "../utils/constants";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   const [restaurantList, setRestaurantList] = useState([]);
@@ -26,36 +27,44 @@ const Body = () => {
   }, []);
 
   const fetchData = async () => {
-    const data = await fetch(
-      SWIGGY_API_URL
-    );
+    const data = await fetch(SWIGGY_API_URL);
 
     const json = await data.json();
     console.log(json);
 
     const resData =
-      json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle
+      json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants;
-    console.log(resData);
+
+    console.log("Restaurant Data" + resData);
 
     setRestaurantList(resData);
     setFilteredRestaurantList(resData);
   };
 
+  const onlineStatus = useOnlineStatus();
+  if (onlineStatus == false)
+    return (
+      <h1>Look like you're offline!! Please check your internet connection</h1>
+    );
+
   // coditional rendering
-  return restaurantList.length === 0 ? (
+  return restaurantList == undefined ? (
+    <h1>No data available</h1>
+  ) : restaurantList.length === 0 ? (
     <Shimmer />
   ) : (
     <div className="body">
-      <div className="filter">
+      <div className="filter flex justify-center">
         <div className="search">
           <input
             type="text"
-            className="search-box"
+            className="search-box border border-solid border-gray-300 px-4 py-1.5 text-base rounded-sm focus:outline-none focus:ring focus:border-blue-400"
             value={searchString}
             onChange={(str) => setSearchString(str.target.value)}
           ></input>
           <button
+            className="px-4 py-2 bg-green-100 m-4 rounded-sm"
             onClick={() => {
               const filteredData = restaurantList.filter((res) =>
                 res.info.name.toLowerCase().includes(searchString.toLowerCase())
@@ -66,19 +75,21 @@ const Body = () => {
             Search
           </button>
         </div>
-        <button
-          className="filter-btn"
-          onClick={() => {
-            const filteredData = filteredRestaurantList.filter(
-              (res) => res.info.avgRating > 4
-            );
-            setFilteredRestaurantList(filteredData);
-          }}
-        >
-          Top Rated restaurant
-        </button>
+        <div className="search m4 p-4 flex items-center rounded-sm">
+          <button
+            className="px-4 py-2 bg-gray-100"
+            onClick={() => {
+              const filteredData = filteredRestaurantList.filter(
+                (res) => res.info.avgRating > 4
+              );
+              setFilteredRestaurantList(filteredData);
+            }}
+          >
+            Top Rated restaurant
+          </button>
+        </div>
       </div>
-      <div className="res-container">
+      <div className="res-container flex flex-wrap justify-center">
         {filteredRestaurantList.map((restaurant) => (
           <Link
             key={restaurant.info.id}

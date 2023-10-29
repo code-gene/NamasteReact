@@ -14,21 +14,27 @@ const RestaurantCard = (props) => {
   } = resData?.info;
 
   return (
-    <div className="res-card">
+    <div className="res-card m-4 p-4 w-[250px] rounded-lg bg-white hover:bg-gray-100 transition duration-300 ease-in-out transform hover:scale-105 shadow-md border border-solid border-white50">
       <img
-        className="res-logo"
+        className="res-logo rounded-lg object-cover mx-auto"
         alt="res-logo"
         src={CDN_URL + cloudinaryImageId}
       />
-      <div className="res-details">
-        <h3 className="res-name">{name}</h3>
-        <p className="res-cuisines">{cuisines.join(", ")}</p>
-        <div className="res-rating">
-          <span className="star-icon">⭐</span>
-          <span className="avg-rating">{avgRating}</span>
+      <div className="res-details text-center">
+        <h3 className="res-name font-bold text-lg py-2">{name}</h3>
+        <p className="res-cuisines text-sm text-gray-500">
+          {cuisines.join(", ")}
+        </p>
+        <div className="res-rating flex items-center justify-center mt-2">
+          <span className="star-icon text-yellow-500 text-lg">⭐</span>
+          <span className="avg-rating font-semibold text-gray-800">
+            {avgRating}
+          </span>
         </div>
-        <p className="res-cost">{costForTwo}</p>
-        <p className="res-delivery-time">{`Delivery Time: ${deliveryTime} minutes`}</p>
+        <p className="res-cost text-lg font-semibold text-green-500 mt-2">
+          {costForTwo}
+        </p>
+        <p className="res-delivery-time text-gray-600 mt-1">{`Delivery Time: ${deliveryTime} minutes`}</p>
       </div>
     </div>
   );
