@@ -1,14 +1,16 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import { useEffect, useState } from "react";
-import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { SWIGGY_API_URL } from "../utils/constants";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import HomeShimmerEffect from "./HomeShimmerEffect";
 
 const Body = () => {
   const [restaurantList, setRestaurantList] = useState([]);
   const [filteredRestaurantList, setFilteredRestaurantList] = useState([]);
   const [searchString, setSearchString] = useState("");
+
+  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
 
   /* 
     Whenever state variable updates, react triggers a reconciliation cycle
@@ -47,12 +49,16 @@ const Body = () => {
     return (
       <h1>Look like you're offline!! Please check your internet connection</h1>
     );
+  
+  // return <ShimmerEffect/>
 
   // coditional rendering
   return restaurantList == undefined ? (
     <h1>No data available</h1>
   ) : restaurantList.length === 0 ? (
-    <Shimmer />
+    <div className="mt-20">
+      <HomeShimmerEffect />
+    </div>
   ) : (
     <div className="body">
       <div className="filter flex justify-center">
@@ -95,7 +101,11 @@ const Body = () => {
             key={restaurant.info.id}
             to={"/restaurants/" + restaurant.info.id}
           >
-            <RestaurantCard resData={restaurant} />
+            {restaurant.info.isOpen && restaurant.info.sla.deliveryTime < 30 ? (
+              <RestaurantCardPromoted resData={restaurant} />
+            ) : (
+              <RestaurantCard resData={restaurant} />
+            )}
           </Link>
         ))}
       </div>

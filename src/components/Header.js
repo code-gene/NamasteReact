@@ -8,6 +8,7 @@ const Header = () => {
   console.log("Header render");
 
   const onlineStatus = useOnlineStatus();
+  
 
   return (
     <div className="header flex flex-col md:flex-row justify-between px-10 my-2">

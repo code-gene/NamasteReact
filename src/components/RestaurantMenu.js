@@ -4,10 +4,13 @@ import { useParams } from "react-router-dom";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
 import { CDN_URL, MENU_IMAGE_URL } from "../utils/constants";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import RestaurantCategory from "./RestaurantCategory";
 
 const RestaurantMenu = () => {
   const { resId } = useParams();
   const resInfo = useRestaurantMenu(resId);
+
+  const [showIndex, setShowIndex] = useState(0)
 
   if (resInfo === null) return <Shimmer />;
 
@@ -26,7 +29,15 @@ const RestaurantMenu = () => {
   const { itemCards } =
     resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card;
 
-  console.log(itemCards);
+  console.log(resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards);
+
+  const categories =
+    resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+      (c) =>
+        c.card?.card?.["@type"] ==
+        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+    );
+  console.log(categories);
 
   return (
     <div className="menu p-4">
@@ -44,7 +55,7 @@ const RestaurantMenu = () => {
             {cuisines.join(", ")} - {costForTwoMessage}
           </p>
         </div>
-        <div className="w-1/4 pb-4 mx-auto bg-white rounded-lg shadow-sm">
+        <div className="w-2/6 p-4 mx-auto bg-white rounded-lg shadow-sm">
           <div className="flex justify-between">
             <div className="flex items-center justify-center">
               <p className="font-semibold">{`${locality}, ${areaName}`}</p>
@@ -58,38 +69,16 @@ const RestaurantMenu = () => {
           </div>
         </div>
       </div>
-      <h2 className="text-2xl font-semibold mb-4 px-16">Menu</h2>
-      <ul className="menu-list space-y-4 px-16">
-        {itemCards.map((item, index) => (
-          <li
-            key={item.card.info.id}
-            className="menu-item bg-white shadow-md p-4 rounded-lg flex items-center"
-          >
-            <div className="menu-item-info flex-1">
-              <h3 className="text-xl font-semibold mb-2">
-                {item.card.info.name}
-              </h3>
-              <p className="text-gray-600">{item.card.info.description}</p>
-              <div className="menu-item-details mt-2">
-                <span className="text-green-600 text-lg font-semibold">{`Price: Rs.${(
-                  item.card.info.price / 100
-                ).toFixed(2)}`}</span>
-              </div>
-            </div>
-            {item.card.info.imageId ? (
-              <img
-                className="menu-item-image rounded-lg object-cover h-20 w-20"
-                alt="item-image"
-                src={MENU_IMAGE_URL + item.card.info.imageId}
-              />
-            ) : (
-              <SkeletonTheme color="#f3f3f3" highlightColor="#ecebeb">
-                <Skeleton height={200} width={100} />
-              </SkeletonTheme>
-            )}
-          </li>
-        ))}
-      </ul>
+      {/* <h2 className="text-2xl font-semibold mb-4 px-16">Menu</h2> */}
+      {categories.map((category, index) => (
+        // controlled component
+        <RestaurantCategory
+          key={category?.card?.card.title}
+          data={category?.card?.card}
+          showItems={index == showIndex ? true : false}
+          setShowIndex={() => setShowIndex(index)}
+        />
+      ))}
     </div>
   );
 };

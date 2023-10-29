@@ -40,5 +40,22 @@ const RestaurantCard = (props) => {
   );
 };
 
+/* 
+  RestaurantCard --> Higher Order Component --> PromotedRestaurantCard
+    (input)                                          (output)
+*/
+
+export const withPromotedLabel = (RestaurantCard) => {
+  return (props) => {
+    return (
+      <div>
+        <label className="absolute m-4 py-1 px-2 bg-opacity-60 backdrop-blur backdrop-filter bg-black text-white z-10 text-sm">
+          30 mins Guranteed
+        </label>
+        <RestaurantCard {...props} />
+      </div>
+    );
+  }
+}
 
 export default RestaurantCard;
