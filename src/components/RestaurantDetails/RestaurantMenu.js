@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import Shimmer from "./Shimmer";
+import Shimmer from "../ShimmerEffect/Shimmer";
 import { useParams } from "react-router-dom";
-import useRestaurantMenu from "../utils/useRestaurantMenu";
-import { CDN_URL, MENU_IMAGE_URL } from "../utils/constants";
+import useRestaurantMenu from "../../utils/useRestaurantMenu";
+import { CDN_URL, MENU_IMAGE_URL } from "../../utils/constants";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import RestaurantCategory from "./RestaurantCategory";
 
@@ -58,6 +58,7 @@ const RestaurantMenu = () => {
         <div className="w-2/6 p-4 mx-auto bg-white rounded-lg shadow-sm">
           <div className="flex justify-between">
             <div className="flex items-center justify-center">
+              <p className="text-lg font-bold px-2">{`📍`}</p>
               <p className="font-semibold">{`${locality}, ${areaName}`}</p>
             </div>
             <div className="text-right">

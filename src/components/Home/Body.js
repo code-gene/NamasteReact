@@ -1,9 +1,9 @@
-import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
+import RestaurantCard, { withPromotedLabel } from "../RestaurantDetails/RestaurantCard";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { SWIGGY_API_URL } from "../utils/constants";
-import useOnlineStatus from "../utils/useOnlineStatus";
-import HomeShimmerEffect from "./HomeShimmerEffect";
+import { SWIGGY_API_URL } from "../../utils/constants";
+import useOnlineStatus from "../../utils/useOnlineStatus";
+import HomeShimmerEffect from "../ShimmerEffect/HomeShimmerEffect";
 
 const Body = () => {
   const [restaurantList, setRestaurantList] = useState([]);
