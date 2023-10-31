@@ -22,22 +22,22 @@ const Header = () => {
       </div>
       <div className="nav-items flex items-center">
         <ul className="flex flex-col justify-center items-center md:flex-row p-5 space-y-2 md:space-x-5">
-          <li>Online Status: {onlineStatus ? "✅" : "🔴"}</li>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About Us</Link>
-          </li>
-          <li>
-            <Link to="/contact">Contact Us</Link>
-          </li>
-          <li>
-            <Link to="/grocery">Grocery</Link>
-          </li>
-          <li className="px-4 font-bold text-xl">
-            <Link to="/cart">🛒{`(${cartItems.length})`}</Link>
-          </li>
+          {/* <li>Online Status: {onlineStatus ? "✅" : "🔴"}</li> */}
+            <li className="md:items-center mt-2">
+              <Link to="/">Home</Link>
+            </li>
+            <li className="md:items-center">
+              <Link to="/about">About Us</Link>
+            </li>
+            <li className="md:items-center">
+              <Link to="/contact">Contact Us</Link>
+            </li>
+            <li className="md:items-center">
+              <Link to="/grocery">Grocery</Link>
+            </li>
+            <li className="md:items-center px-4 font-bold text-xl">
+              <Link to="/cart">🛒{`(${cartItems.length})`}</Link>
+            </li>
           <button
             className="login"
             onClick={() => {

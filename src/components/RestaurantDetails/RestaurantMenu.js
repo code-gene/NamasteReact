@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react";
-import Shimmer from "../ShimmerEffect/Shimmer";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import useRestaurantMenu from "../../utils/useRestaurantMenu";
-import { CDN_URL, MENU_IMAGE_URL } from "../../utils/constants";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { CDN_URL} from "../../utils/constants";
 import RestaurantCategory from "./RestaurantCategory";
+import HomeShimmerEffect from "../ShimmerEffect/HomeShimmerEffect";
 
+// This component shows Resturant Details and Menu Items
 const RestaurantMenu = () => {
   const { resId } = useParams();
   const resInfo = useRestaurantMenu(resId);
 
-  const [showIndex, setShowIndex] = useState(0)
+  const [showIndex, setShowIndex] = useState(0);
 
-  if (resInfo === null) return <Shimmer />;
+   if (resInfo === null) return <HomeShimmerEffect/>
+
+  console.log("Restaurant Info", resInfo);
 
   const {
     name,
@@ -26,9 +28,6 @@ const RestaurantMenu = () => {
     cloudinaryImageId,
   } = resInfo?.cards[0]?.card?.card?.info;
 
-  const { itemCards } =
-    resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card;
-
   console.log(resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards);
 
   const categories =
@@ -37,6 +36,7 @@ const RestaurantMenu = () => {
         c.card?.card?.["@type"] ==
         "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
     );
+  const resDetails = resInfo?.cards[0]?.card?.card?.info;
   console.log(categories);
 
   return (

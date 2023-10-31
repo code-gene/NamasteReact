@@ -16,7 +16,6 @@ const Body = () => {
     Whenever state variable updates, react triggers a reconciliation cycle
     (re-render the component)
   */
-  console.log("Body Rendered");
 
   // useEffect is called after the component renders
   /*
@@ -32,13 +31,10 @@ const Body = () => {
     const data = await fetch(SWIGGY_API_URL);
 
     const json = await data.json();
-    console.log(json);
 
     const resData =
-      json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle
+      json?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants;
-
-    console.log("Restaurant Data" + resData);
 
     setRestaurantList(resData);
     setFilteredRestaurantList(resData);

@@ -1,5 +1,6 @@
 import { CDN_URL } from '../../utils/constants';
 
+// This component is used in the Home section to display various restaurant cards.
 const RestaurantCard = (props) => {
   const { resData } = props;
 

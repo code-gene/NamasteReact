@@ -6,12 +6,13 @@ const useRestaurantMenu = (resId) => {
     const [resInfo, setResInfo] = useState(null);
 
     useEffect(() => {
-        fetchMenu();
+      fetchMenu();
     }, []);
 
     const fetchMenu = async () => {
       const response = await fetch(MENU_API + resId);
       const json = await response.json();
+      console.log("Fetch menu");
       console.log(json);
 
       setResInfo(json.data);

@@ -1,15 +1,12 @@
 import { useState } from "react";
 import CategoryItemList from "./CategoryItemList";
 
+// This component shows various categories of Menu Items
 const RestaurantCategory = ({ data, showItems, setShowIndex }) => {
-  // const { data } = props;
-  // const { showItems } = props.showItems;
-  // const {setShowIndex} = props.setShowIndex;
 
   const handleClick = () => {
     setShowIndex();
   };
-  // console.log("Restaurant Category: ", data.itemCards);
 
   return (
     <div className="w-10/12 mx-auto my-4 bg-gray-50 shadow-md p-4">
