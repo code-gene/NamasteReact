@@ -1,8 +1,6 @@
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { MENU_IMAGE_URL } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem, addRestaurantDetails, getItemCount, removeItem } from "../../utils/cartSlice";
-import { useState } from "react";
+import { addItem, clearCart, removeItem } from "../../utils/cartSlice";
 import CartItemQuantity from "../Cart/CartItemQuantity";
 
 // This component shows List of all Food items
@@ -10,11 +8,22 @@ const CategoryItemList = ({ items }) => {
 
   const cartItems = useSelector((store) => store.cart.items);
   const resDetails = useSelector((store) => store.cart.resDetails);
+  const currentResDetails = useSelector((store) => store.cart.currentResDetails);
   
   const dispatch = useDispatch();
   
   const handleAddItemToCart = (item) => {
-    console.log("Add Item to cart", item);
+    if (currentResDetails.id !== resDetails.id) {
+      if (
+        window.confirm(
+          "Items already in cart. Your cart contains items from other restaurants. Would you like to reset your cart for adding items from this restaurant?"
+        )
+      ) {
+        dispatch(clearCart());
+      } else {
+        return; // Do nothing if the user selects "No"
+      }
+    }
     dispatch(addItem(item));
   };
 

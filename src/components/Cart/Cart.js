@@ -23,7 +23,10 @@ const Cart = () => {
     }
   }
 
-  const deliveryFee = resDetails.feeDetails.totalFee / 100;
+  const deliveryFee =
+    resDetails.feeDetails.totalFee == null
+      ? 30
+      : (resDetails.feeDetails.totalFee / 100);
   const platformFee = 3;
   const gstAmount = 0.18 * totalItemsCost;
 
