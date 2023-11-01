@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addItem, clearCart, removeItem } from "../../utils/cartSlice";
 import CartItemQuantity from "../Cart/CartItemQuantity";
 
-// This component shows List of all Food items
+// This component shows List of all Food items for each and every category
 const CategoryItemList = ({ items }) => {
 
   const cartItems = useSelector((store) => store.cart.items);
@@ -46,10 +46,17 @@ const CategoryItemList = ({ items }) => {
               key={item.card.info.id}
               className="menu-item bg-white shadow-md p-4 rounded-lg flex items-center relative"
             >
-              <div className="menu-item-info flex-1">
-                <h3 className="text-xl font-semibold mb-2">
-                  {item.card.info.name}
-                </h3>
+              <div className="menu-item-info flex-1 relative">
+                <div className="flex">
+                  <h3 className="text-xl font-semibold mb-2">
+                    {item.card.info.name}
+                  </h3>
+                  {item.card.info.isBestseller && (
+                    <label className="h-7 min-w-[80px] ml-2 px-2 py-1 bg-green-600 text-white text-sm font-semibold rounded-sm">
+                      Best Seller
+                    </label>
+                  )}
+                </div>
                 <p className="text-gray-600">{item.card.info.description}</p>
                 <div className="menu-item-details mt-2">
                   <span className="text-green-600 text-lg font-semibold">
