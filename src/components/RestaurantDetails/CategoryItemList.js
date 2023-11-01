@@ -9,7 +9,8 @@ import CartItemQuantity from "../Cart/CartItemQuantity";
 const CategoryItemList = ({ items }) => {
 
   const cartItems = useSelector((store) => store.cart.items);
-
+  const resDetails = useSelector((store) => store.cart.resDetails);
+  
   const dispatch = useDispatch();
   
   const handleAddItemToCart = (item) => {

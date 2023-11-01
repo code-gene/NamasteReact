@@ -4,6 +4,7 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState: {
         items: [],
+        resDetails: null
     },
     reducers: {
         addItem: (state, action) => {
@@ -19,6 +20,7 @@ const cartSlice = createSlice({
         clearCart: (state) => {
             state.items = [];
         },
+        
         addRestaurantDetails: (state, action) => { 
             state.resDetails = action.payload;
         }
